@@ -9,7 +9,7 @@
 	<property name="ireport.jasperserver.user" value="superuser"/>
 	<property name="ireport.jasperserver.reportUnit" value="/public/Samples/Reports/Abstract_Book"/>
 	<parameter name="JSON_DATA_STRING" class="java.lang.String">
-		<defaultValueExpression><![CDATA["{ \"reports\": [{\"name\": \"Report1\", \"reporturi\": \"repo:/public/Samples/Resources/Subreports/Report1Sub\",\"data\": {\"title\": \"Test report 1\"}},{\"name\": \"Report2\", \"reporturi\": \"repo:/public/Samples/Resources/Subreports/Report2Sub\", \"data\": {\"title\": \"Test report 2\"}}] }"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["{ \"reports\": [{\"name\": \"Report1\", \"reporturi\": \"repo:/public/Samples/Reports/Report1Sub_files/main_jrxml\",\"data\": {\"AccountInfo\": \"Some Account Info\", \"ReportType\": \"Some report type\", \"PositionDetailData\": [{\"name\": \"test1\",\"value\": 100},{\"name\": \"test2\",\"value\": 200}]}},{\"name\": \"Report2\", \"reporturi\": \"repo:/public/Samples/Resources/Subreports/Report2Sub\", \"data\": {\"title\": \"Test report 2\"}}] }"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="JSON_INPUT_STREAM" class="java.io.InputStream" isForPrompting="false">
 		<defaultValueExpression><![CDATA[new ByteArrayInputStream($P{JSON_DATA_STRING}.getBytes("UTF-8"))]]></defaultValueExpression>
