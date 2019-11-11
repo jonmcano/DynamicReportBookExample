@@ -1,28 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 7.3.0.final using JasperReports Library version 6.8.1-SNAPSHOT-1ebbe47629f595df82c137d4edda18ac1dafc9f1  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Report2Sub" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e0d18b37-8547-4369-ab77-b1dea393cb51">
+<!-- Created with Jaspersoft Studio version 7.3.1.final using JasperReports Library version 6.8.1-3d4b87119c827be13776e451fb3738062f84a87d  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Report2Sub" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e0d18b37-8547-4369-ab77-b1dea393cb51">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="SampleSubReportDataxml.xml"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="ireport.jasperserver.url" value="http://localhost:8080/jasperserver-pro/"/>
+	<property name="ireport.jasperserver.user" value="superuser"/>
+	<property name="ireport.jasperserver.reportUnit" value="/public/Samples/Report2Sub"/>
+	<parameter name="pSomeOtherParameterForreports" class="java.lang.String">
+		<defaultValueExpression><![CDATA["test2"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="pReportName" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="TableOfContents" class="org.json.JSONArray" isForPrompting="false"/>
 	<queryString language="JSON">
 		<![CDATA[]]>
 	</queryString>
-	<field name="title" class="java.lang.String">
-		<property name="net.sf.jasperreports.json.field.expression" value="title"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="report.title"/>
-		<fieldDescription><![CDATA[title]]></fieldDescription>
-	</field>
+	<variable name="TableOfContents" class="org.json.JSONArray" resetType="None">
+		<variableExpression><![CDATA[$P{TableOfContents}.put(new org.json.JSONObject("{ \"level\": 1, \"label\": \"" + $P{pReportName} + "\", \"pageIndex\": " + $V{PAGE_NUMBER} + "}"))]]></variableExpression>
+		<initialValueExpression><![CDATA[$P{TableOfContents}]]></initialValueExpression>
+	</variable>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="79" splitType="Stretch">
+		<band height="85" splitType="Stretch">
 			<textField bookmarkLevel="1">
-				<reportElement x="5" y="3" width="100" height="30" uuid="5dd28c72-a9ad-4c21-8888-87394ec31ffe">
+				<reportElement x="5" y="3" width="315" height="30" uuid="5dd28c72-a9ad-4c21-8888-87394ec31ffe">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="72a86f15-4c09-43c1-9597-84d206c001e3"/>
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 				</reportElement>
-				<textFieldExpression><![CDATA[$F{title}]]></textFieldExpression>
-				<anchorNameExpression><![CDATA[$F{title}]]></anchorNameExpression>
+				<textFieldExpression><![CDATA[$P{pSomeOtherParameterForreports}]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>

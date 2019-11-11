@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 7.3.0.final using JasperReports Library version 6.8.1-SNAPSHOT-1ebbe47629f595df82c137d4edda18ac1dafc9f1  -->
+<!-- Created with Jaspersoft Studio version 7.3.1.final using JasperReports Library version 6.8.1-3d4b87119c827be13776e451fb3738062f84a87d  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Report1Sub" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e0d18b37-8547-4369-ab77-b1dea393cb51">
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DataAdapter.xml"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="ireport.jasperserver.url" value="http://localhost:8080/jasperserver-pro/"/>
 	<property name="ireport.jasperserver.user" value="superuser"/>
-	<property name="ireport.jasperserver.reportUnit" value="/public/Samples/Reports/Report1Sub"/>
-	<property name="ireport.jasperserver.report.resource" value="/public/Samples/Reports/Report1Sub_files/main_jrxml"/>
+	<property name="ireport.jasperserver.reportUnit" value="/public/Samples/Report1Sub"/>
 	<style name="Table_TH" mode="Opaque" backcolor="#F0F8FF">
 		<box>
 			<pen lineWidth="0.5" lineColor="#000000"/>
@@ -34,121 +33,91 @@
 			<rightPen lineWidth="0.5" lineColor="#000000"/>
 		</box>
 	</style>
-	<style name="Table 1_TH" mode="Opaque" backcolor="#F0F8FF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Table 1_CH" mode="Opaque" backcolor="#BFE1FF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="Table 1_TD" mode="Opaque" backcolor="#FFFFFF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-			<topPen lineWidth="0.5" lineColor="#000000"/>
-			<leftPen lineWidth="0.5" lineColor="#000000"/>
-			<bottomPen lineWidth="0.5" lineColor="#000000"/>
-			<rightPen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<subDataset name="Dataset1" uuid="d83e95fc-2931-47a7-bcb8-52cd1a3eb5a4">
-		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<subDataset name="Dataset1" uuid="19fd7cb3-62cc-48f6-b939-8517519122b3">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Foodmart Data Source JNDI"/>
 		<queryString>
-			<![CDATA[]]>
+			<![CDATA[SELECT product.product_id,
+	product.brand_name
+FROM product]]>
 		</queryString>
-		<field name="name" class="java.lang.String"/>
-		<field name="value" class="java.lang.Integer"/>
+		<field name="product_id" class="java.lang.Integer">
+			<property name="com.jaspersoft.studio.field.label" value="product_id"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="product"/>
+		</field>
+		<field name="brand_name" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="brand_name"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="product"/>
+		</field>
 	</subDataset>
-	<parameter name="JSON_DATA_STRING" class="java.lang.String">
-		<defaultValueExpression><![CDATA["{\"AccountInfo\": \"Some Account Info\", \"ReportType\": \"Some report type\", \"PositionDetailData\": [{\"name\": \"test1\",\"value\": 100},{\"name\": \"test2\",\"value\": 200}]}"]]></defaultValueExpression>
+	<parameter name="pSomeParameterForReports" class="java.lang.String">
+		<defaultValueExpression><![CDATA["test"]]></defaultValueExpression>
 	</parameter>
-	<parameter name="JSON_INPUT_STREAM" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA[new ByteArrayInputStream($P{JSON_DATA_STRING}.getBytes("UTF-8"))]]></defaultValueExpression>
+	<parameter name="jsConn" class="java.sql.Connection" isForPrompting="false">
+		<defaultValueExpression><![CDATA[((javax.sql.DataSource)((javax.naming.Context)new javax.naming.InitialContext().lookup("java:/comp/env")).lookup("jdbc/foodmart")).getConnection()]]></defaultValueExpression>
 	</parameter>
+	<parameter name="pReportName" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="TableOfContents" class="org.json.JSONArray" isForPrompting="false"/>
 	<queryString language="JSON">
 		<![CDATA[]]>
 	</queryString>
-	<field name="AccountInfo" class="java.lang.String">
-		<property name="net.sf.jasperreports.json.field.expression" value="AccountInfo"/>
-		<fieldDescription><![CDATA[AccountInfo]]></fieldDescription>
-	</field>
-	<field name="ReportType" class="java.lang.String">
-		<property name="net.sf.jasperreports.json.field.expression" value="ReportType"/>
-		<fieldDescription><![CDATA[ReportType]]></fieldDescription>
-	</field>
-	<field name="PositionDetailData" class="java.lang.Object">
-		<property name="net.sf.jasperreports.json.field.expression" value="PositionDetailData"/>
-		<fieldDescription><![CDATA[PositionDetailData]]></fieldDescription>
-	</field>
+	<variable name="TableOfContents" class="org.json.JSONArray" resetType="None">
+		<variableExpression><![CDATA[$P{TableOfContents}.put(new org.json.JSONObject("{ \"level\": 1, \"label\": \"" + $P{pReportName} + "\", \"pageIndex\": " + $V{PAGE_NUMBER} + "}"))]]></variableExpression>
+		<initialValueExpression><![CDATA[$P{TableOfContents}]]></initialValueExpression>
+	</variable>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="79" splitType="Stretch">
+		<band height="115" splitType="Stretch">
 			<textField evaluationTime="Report" bookmarkLevel="1">
 				<reportElement x="5" y="3" width="275" height="30" uuid="b5b3e515-9cb0-46ab-bafa-34c4b4d42461">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="72a86f15-4c09-43c1-9597-84d206c001e3"/>
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 				</reportElement>
-				<textFieldExpression><![CDATA[$F{AccountInfo}]]></textFieldExpression>
-				<anchorNameExpression><![CDATA[$F{AccountInfo}]]></anchorNameExpression>
-			</textField>
-			<textField evaluationTime="Report">
-				<reportElement x="5" y="39" width="275" height="30" uuid="b7641ae5-4eb1-46cc-881d-a7a3d5116d3d"/>
-				<textFieldExpression><![CDATA[$F{ReportType}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{pSomeParameterForReports}]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>
 	<summary>
-		<band height="287">
+		<band height="60">
 			<componentElement>
-				<reportElement x="0" y="0" width="555" height="287" uuid="2555c9c0-d3b2-48e1-b3a8-18c8ee77be7d">
+				<reportElement x="0" y="0" width="555" height="60" uuid="78bf8471-0f9e-4467-946b-4b50cefb9d8c">
 					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
-					<property name="com.jaspersoft.studio.table.style.table_header" value="Table 1_TH"/>
-					<property name="com.jaspersoft.studio.table.style.column_header" value="Table 1_CH"/>
-					<property name="com.jaspersoft.studio.table.style.detail" value="Table 1_TD"/>
+					<property name="com.jaspersoft.studio.table.style.table_header" value="Table_TH"/>
+					<property name="com.jaspersoft.studio.table.style.column_header" value="Table_CH"/>
+					<property name="com.jaspersoft.studio.table.style.detail" value="Table_TD"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 				</reportElement>
 				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
-					<datasetRun subDataset="Dataset1" uuid="4bd2ca9d-3418-4c55-b3be-e36c99e6e637">
-						<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JsonDataSource(new ByteArrayInputStream($F{PositionDetailData}.toString().getBytes("UTF-8")))]]></dataSourceExpression>
+					<datasetRun subDataset="Dataset1" uuid="d73790d9-15e0-4aba-86bd-1ec2668eee49">
+						<connectionExpression><![CDATA[$P{jsConn}]]></connectionExpression>
 					</datasetRun>
-					<jr:column width="278" uuid="0b61192c-3ea2-4b77-a1ae-1e9e1628111b">
-						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
-						<jr:columnHeader style="Table 1_CH" height="30" rowSpan="1">
-							<textField>
-								<reportElement x="0" y="0" width="278" height="30" uuid="721bbe00-03f1-449a-a56d-2d1efdba9c76"/>
-								<textFieldExpression><![CDATA["NAME"]]></textFieldExpression>
-							</textField>
+					<jr:column width="100" uuid="5d8b0863-b88b-41e3-b6e9-9a54eb912f29">
+						<jr:columnHeader style="Table_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="100" height="30" uuid="e8f21cac-13a8-4973-8682-f8881bdb566b"/>
+								<text><![CDATA[product_id]]></text>
+							</staticText>
 						</jr:columnHeader>
-						<jr:detailCell style="Table 1_TD" height="30">
+						<jr:detailCell style="Table_TD" height="30">
 							<textField>
-								<reportElement x="0" y="0" width="278" height="30" uuid="ba11b274-96e2-4707-b402-068ad04cc8a7"/>
-								<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
+								<reportElement x="0" y="0" width="100" height="30" uuid="f941dad6-0d89-4f52-8d5e-955240d8aff9"/>
+								<textFieldExpression><![CDATA[$F{product_id}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="277" uuid="c067162f-ba51-4272-95a2-f507213cc9d3">
-						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
-						<jr:columnHeader style="Table 1_CH" height="30" rowSpan="1">
-							<textField>
-								<reportElement x="0" y="0" width="277" height="30" uuid="da482d6e-bedd-42c9-bd6f-217b91c08446"/>
-								<textFieldExpression><![CDATA["VALUE"]]></textFieldExpression>
-							</textField>
+					<jr:column width="100" uuid="c11d92a0-bae6-4b5a-9b27-d11653b9d87b">
+						<jr:columnHeader style="Table_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="100" height="30" uuid="98672b4d-2035-4838-81e7-065f80911375"/>
+								<text><![CDATA[brand_name]]></text>
+							</staticText>
 						</jr:columnHeader>
-						<jr:detailCell style="Table 1_TD" height="30">
+						<jr:detailCell style="Table_TD" height="30">
 							<textField>
-								<reportElement x="0" y="0" width="277" height="30" uuid="94e1b53a-aec6-4787-ba62-c7801ae24e95"/>
-								<textFieldExpression><![CDATA[$F{value}]]></textFieldExpression>
+								<reportElement x="0" y="0" width="100" height="30" uuid="3c8d518d-39b5-4f53-9b5b-e720ca6c3914"/>
+								<textFieldExpression><![CDATA[$F{brand_name}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>

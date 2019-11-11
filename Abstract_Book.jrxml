@@ -1,18 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 7.3.0.final using JasperReports Library version 6.8.1-SNAPSHOT-1ebbe47629f595df82c137d4edda18ac1dafc9f1  -->
+<!-- Created with Jaspersoft Studio version 7.3.1.final using JasperReports Library version 6.8.1-3d4b87119c827be13776e451fb3738062f84a87d  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Abstract_Book" pageWidth="595" pageHeight="842" sectionType="Part" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="30" bottomMargin="30" uuid="d2716064-8ae4-40cf-a575-33afba400e3a">
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter (3)"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DataAdapter.xml"/>
 	<property name="net.sf.jasperreports.print.create.bookmarks" value="true"/>
 	<property name="com.jaspersoft.studio.book.group.cover.header" value="Cover and Table of Contents"/>
 	<property name="com.jaspersoft.studio.book.group.cover.footer" value="Backcover"/>
 	<property name="ireport.jasperserver.url" value="http://localhost:8080/jasperserver-pro/"/>
 	<property name="ireport.jasperserver.user" value="superuser"/>
-	<property name="ireport.jasperserver.reportUnit" value="/public/Samples/Reports/Abstract_Book"/>
+	<property name="ireport.jasperserver.reportUnit" value="/public/Abstract_Book"/>
 	<parameter name="JSON_DATA_STRING" class="java.lang.String">
-		<defaultValueExpression><![CDATA["{ \"reports\": [{\"name\": \"Report1\", \"reporturi\": \"repo:/public/Samples/Reports/Report1Sub_files/main_jrxml\",\"data\": {\"AccountInfo\": \"Some Account Info\", \"ReportType\": \"Some report type\", \"PositionDetailData\": [{\"name\": \"test1\",\"value\": 100},{\"name\": \"test2\",\"value\": 200}]}},{\"name\": \"Report2\", \"reporturi\": \"repo:/public/Samples/Resources/Subreports/Report2Sub\", \"data\": {\"title\": \"Test report 2\"}}] }"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["{\"reports\":[{\"name\":\"Report1\",\"reporturi\":\"repo:/public/resources/JRXML/report1sub\"},{\"name\":\"Report2\",\"reporturi\":\"repo:/public/resources/JRXML/report2sub\"},{\"name\":\"Report3\",\"reporturi\":\"repo:/public/resources/JRXML/report1sub\"},{\"name\":\"Report4\",\"reporturi\":\"repo:/public/resources/JRXML/report2sub\"},{\"name\":\"Report5\",\"reporturi\":\"repo:/public/resources/JRXML/report1sub\"}]}"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="JSON_INPUT_STREAM" class="java.io.InputStream" isForPrompting="false">
 		<defaultValueExpression><![CDATA[new ByteArrayInputStream($P{JSON_DATA_STRING}.getBytes("UTF-8"))]]></defaultValueExpression>
+	</parameter>
+	<parameter name="pSomeParameterForReports" class="java.lang.String">
+		<defaultValueExpression><![CDATA["test"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="pSomeOtherParameterForreports" class="java.lang.String">
+		<defaultValueExpression><![CDATA["test2"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="TableOfContents" class="org.json.JSONArray" isForPrompting="false">
+		<defaultValueExpression><![CDATA[new org.json.JSONArray()]]></defaultValueExpression>
 	</parameter>
 	<queryString language="JSON">
 		<![CDATA[reports]]>
@@ -25,12 +34,9 @@
 		<property name="net.sf.jasperreports.json.field.expression" value="reporturi"/>
 		<fieldDescription><![CDATA[reporturi]]></fieldDescription>
 	</field>
-	<field name="data" class="java.lang.Object">
-		<property name="net.sf.jasperreports.json.field.expression" value="data"/>
-		<fieldDescription><![CDATA[data]]></fieldDescription>
-	</field>
-	<variable name="TableOfContents" class="java.lang.String" incrementType="Column">
-		<variableExpression><![CDATA[($V{TableOfContents} == null ? "[" : $V{TableOfContents}.substring(0,$V{TableOfContents}.length()-1) + ",") + "{ \"level\": 1, \"label\": \"" + $F{name} + "\", \"pageIndex\": " + ($V{PAGE_COUNT} ) + "}]"]]></variableExpression>
+	<variable name="TableOfContents" class="org.json.JSONArray" resetType="None">
+		<variableExpression><![CDATA[$P{TableOfContents}]]></variableExpression>
+		<initialValueExpression><![CDATA[$P{TableOfContents}]]></initialValueExpression>
 	</variable>
 	<group name="cover">
 		<groupHeader>
@@ -42,7 +48,7 @@
 					<subreportParameter name="REPORT_DATA_SOURCE">
 						<subreportParameterExpression><![CDATA[new net.sf.jasperreports.engine.data.JsonDataSource(new ByteArrayInputStream($V{TableOfContents}.toString().getBytes("UTF-8")))]]></subreportParameterExpression>
 					</subreportParameter>
-					<subreportExpression><![CDATA["repo:/public/Samples/Resources/Subreports/Abstract_Book_toc"]]></subreportExpression>
+					<subreportExpression><![CDATA["repo:/public/resources/JRXML/abstractbooktoc"]]></subreportExpression>
 				</p:subreportPart>
 			</part>
 		</groupHeader>
@@ -50,8 +56,17 @@
 	<detail>
 		<part uuid="7b55cf80-bdd4-46f7-afc6-906025ceeaf3">
 			<p:subreportPart xmlns:p="http://jasperreports.sourceforge.net/jasperreports/parts" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/parts http://jasperreports.sourceforge.net/xsd/parts.xsd">
-				<subreportParameter name="REPORT_DATA_SOURCE">
-					<subreportParameterExpression><![CDATA[new net.sf.jasperreports.engine.data.JsonDataSource(new ByteArrayInputStream($F{data}.toString().getBytes("UTF-8")))]]></subreportParameterExpression>
+				<subreportParameter name="pSomeParameterForReports">
+					<subreportParameterExpression><![CDATA[$P{pSomeParameterForReports}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="pSomeOtherParameterForreports">
+					<subreportParameterExpression><![CDATA[$P{pSomeOtherParameterForreports}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="pReportName">
+					<subreportParameterExpression><![CDATA[$F{name}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="TableOfContents">
+					<subreportParameterExpression><![CDATA[$V{TableOfContents}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportExpression><![CDATA[$F{reporturi}]]></subreportExpression>
 			</p:subreportPart>
